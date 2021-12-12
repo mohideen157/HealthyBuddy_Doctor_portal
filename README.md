@@ -1,1 +1,1 @@
-# HealthyBuddy_Doctor_portal
+# HealthBuddy_doctor_portal

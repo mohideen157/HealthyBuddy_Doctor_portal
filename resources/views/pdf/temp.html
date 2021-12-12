@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+</head>
+<body class="doctorPrescription">
+	<table>
+		<tr>
+			<td><img src="{{ public_path('images/logo-small.png') }}"></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>
+				<p class="commonColor">Doctor Name</p>
+				<h4>{{ $doctor['name'] }}</h4>
+			</td>
+			<td>
+				<p class="commonColor">Patient Name</p>
+				<h4>{{ $patient['name'] }}</h4>
+			</td>
+			<td>
+				<p class="commonColor">Doctor Speciality</p>
+				<h4>{{ $doctor['specialty'] }}</h4>
+			</td>
+			<td>
+				<p class="commonColor">Patient ID</p>
+				<h4>{{ $patient['shedct_id'] }}</h4>
+			</td>
+		</tr>
+		<tr>
+			<td>Date&#58;{{ $date }}</td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</table>
+	<div class="doctorPrescription">
+		<img src="{{ public_path('images/logo-small.png') }}">
+		<ul class="list-inline">
+			<li>
+				<p class="commonColor">Doctor Name</p>
+				<h4>{{ $doctor['name'] }}</h4>
+			</li>
+			<li>
+				<p class="commonColor">Patient Name</p>
+				<h4>{{ $patient['name'] }}</h4>
+			</li>
+			<li>
+				<p class="commonColor">Doctor Speciality</p>
+				<h4>{{ $doctor['specialty'] }}</h4>
+			</li>
+			<li>
+				<p class="commonColor">Patient ID</p>
+				<h4>{{ $patient['shedct_id'] }}</h4>
+			</li>
+		</ul>
+		<p class="commonColor">Date&#58;{{ $date }}</p>
+	</div>
+	<div class="write-report">
+		<div class="patientPrescriptionDetails">
+			<div class="row prescription-form-row">
+				<p class="commonColor">Diagnosis Report</p>
+				<p>{{ $report }}</p>
+			</div>
+			<div class="row prescription-form-row" ng-if="!_.isEmpty(ap.prescription.lab_tests)">
+				<p class="commonColor">Lab Tests</p>
+				<ul class="list-unstyled medicineAndTest">
+					@foreach ($lab_tests as $test) 
+						<li>{{ $test }}</li>
+					@endforeach
+				</ul>
+			</div>
+			<div class="row prescription-form-row" ng-if="!_.isEmpty(ap.prescription.medicines)">
+				<p class="commonColor">Medicine Details</p>
+				<table class="table table-bordered medicineTime">
+					<thead>
+						<tr>
+							<th>Medicine Name</th>
+							<th>Medicine Type</th>
+							<th>Morning</th>
+							<th>Afternoon</th>
+							<th>Evening</th>
+							<th>Night</th>
+							<th>Add Note</th>
+						</tr>
+					</thead>
+					@foreach($medicines as $med)
+						<tr>
+							<td>{{ $med['name'] }}</td>
+							<td>{{ $med['type'] }}</td>
+							<td>{{ $med['morning'] }}</td>
+							<td>{{ $med['afternoon'] }}</td>
+							<td>{{ $med['evening'] }}</td>
+							<td>{{ $med['night'] }}</td>
+							<td>{{ $med['note'] }}</td>
+						</tr>
+					@endforeach
+				</table>
+			</div>
+			<div class="row makeAlignProper">
+				<div class="col-sm-6">
+					<img src="{{ public_path('images/doctorCertificate.png') }}" class="img-responsive">
+				</div>
+				<div class="col-sm-offset-1 col-sm-5">
+					<!-- <img src="/ui/images/signature.png"> -->
+					<img class="img-responsive" src="data:image;base64,{{ $doctor['signature'] }}">
+					<h4>{{ $doctor['name'] }}</h4>
+					<p class="commonColor">Specialist:&nbsp;{{ $doctor['specialty'] }}</p>
+					<p class="commonColor" style="margin-top:10px;">Doctor registration Number</p>
+					<p>{{ $doctor['registration_no'] }}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- </div> -->
+</body>
+</html>

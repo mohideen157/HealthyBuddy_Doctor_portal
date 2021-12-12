@@ -1,0 +1,178 @@
+{
+    "parent_key":"travel-national",
+    "child_key": "travel-interval",
+    "value":"3",
+    "unit":"weekly"
+}
+
+{
+    "parent_key":"travel-international",
+    "child_key": "travel-interval",
+    "value":"2",
+    "unit":"weekly"
+}
+
+{
+    "parent_key":"diet-type",
+    "value":"veg",
+}
+
+{
+    "parent_key":"cup-of-vegetables",
+    "value":"3",
+    "unit":"weekly"
+}
+
+{
+    "parent_key":"cereals-qty",
+    "value":"3",
+    "unit":"weekly"
+}
+
+{
+    "parent_key":"fast-food",
+    "value":"1 burger, 1 slice pizza",
+    "unit":"weekly"
+}
+
+{
+    "parent_key":"drinks",
+    "value":"3",
+    "unit":"glass"
+}
+
+{
+    "parent_key":"alcohol",
+    "value":"yes",
+}
+
+
+{
+    "parent_key":"alcohol",
+    "child_key":"alcohol-interval"
+    "value":"125 ml",
+    "unit":"daily"
+}
+
+{
+    "parent_key":"smoking",
+    "value":"yes",
+}
+
+{
+    "parent_key":"alcohol",
+    "child_key":"smoking-start-age"
+    "value":"12",
+}
+
+{
+    "parent_key":"alcohol",
+    "child_key":"smoking-end-age"
+    "value":"26",
+}
+
+{
+    "parent_key":"alcohol",
+    "child_key":"smoking-interval"
+    "value":"10",
+    "unit":"weekly"
+}
+
+{
+    "parent_key":"vigorus-physical-activity",
+    "value":"1",
+    "unit":"hour"
+}
+
+{
+    "parent_key":"moderate-physical-activity",
+    "value":"1",
+    "unit":"hour"
+}
+
+{
+    "parent_key":"light-physical-activity",
+    "value":"1",
+    "unit":"hour"
+}
+
+{
+    "parent_key":"diebetic",
+    "value":"yes",
+}
+
+{
+    "parent_key":"diebetic",
+    "child_key":"medicine"
+    "value":"taking medicine with normal sugar level",
+}
+
+{
+    "parent_key":"blood-cholestrol",
+    "value":"200-400",
+}
+
+{
+    "parent_key":"blood-pressure",
+    "value":"Between 120-140",
+}
+
+{
+    "parent_key":"cardiovascular-or-stroke",
+    "value":"yes",
+}
+
+{
+    "parent_key":"disease",
+    "value":"yes",
+}
+
+{
+    "parent_key":"disease",
+    "child_key":"disese_name"
+    "value":"diebetes type A",
+}
+
+{
+    "parent_key":"disease",
+    "child_key":"disese_name"
+    "value":"diebetes type B",
+}
+
+
+{
+    "parent_key":"allergy",
+    "value":"yes",
+}
+
+{
+    "parent_key":"allergy",
+    "child_key":"allergy-name"
+    "value":"milk",
+}
+
+{
+    "parent_key":"allergy",
+    "child_key":"allergy-name"
+    "value":"dust",
+}
+
+{
+    "parent_key":"medication",
+    "value":"yes",
+}
+
+{
+    "parent_key":"medication",
+    "child_key":"medication-details",
+    "value":"Montek KC",
+    "dosage":"100 MG",
+    "type":"tablet",
+    "per_day":"3"
+}
+
+{
+    "parent_key":"allergy",
+    ""
+    "value":"yes",
+}

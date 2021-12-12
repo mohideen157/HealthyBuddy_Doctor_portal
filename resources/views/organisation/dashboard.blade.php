@@ -1,0 +1,1 @@
+@extends('organisation.component._master')

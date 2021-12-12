@@ -1,0 +1,1414 @@
+@extends(App\User::isTenant() ? 'tenant.component._master' : (App\User::isOrganisation() ? 'organisation.component._master' : 'layouts.master'))
+
+@section('style')
+@endsection
+
+@section('content')
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12 dashboard-wrapper">
+			<div class="col-md-9 dashboard_box_container">
+				<div class="col-md-3 col-sm-6 col-xs-12">
+					<a href='javascript:' class="all-color search-option active-search-option">
+						<span class="number-info">{{ $users->count() }}</span>
+						<span class="name-info">All</span>
+					</a>
+				</div>
+				<div class="col-md-3 col-sm-6 col-xs-12">
+					<a href='javascript:' class="abnormal-color search-option">
+						<span class="number-info">2</span>
+						<span class="name-info">Abnormal</span>
+					</a>
+				</div>
+				<div class="col-md-3 col-sm-6 col-xs-12">
+					<a href='javascript:' class="afib-color search-option">
+						<span class="number-info">0</span>
+						<span class="name-info">Afib</span>
+					</a>
+				</div>
+				<div class="col-md-3 col-sm-6 col-xs-12">
+					<a href='javascript:' class="arrhythmia-color search-option">
+						<span class="number-info">2</span>
+						<span class="name-info">Arrhythmia</span>
+					</a>
+				</div>
+			</div>
+			<div class="col-md-3 search-wrapper">
+				<div class="select-style">
+					<select id="select-option">
+						<option value="device1">Device 1</option>
+						<option value="device2" selected>Device 2</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="tenant-panel-wrapper" id="table-content">
+			<div class="col-md-12 col-xs-12 tenant-panel" id="device2">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title" style="font-size:18px;display: inline-block;">Patient Profile - Device 2</h3>
+						<span class="pull-right clickable">
+							<i class="fa fa-chevron-up"></i>
+						</span>
+					</div>
+					<div class="panel-body" style="padding: 0;">
+						<div id="collapse">
+							<div class="table-responsive">
+								<table id="adminsettings-table" class="table table-bordered table-hover">
+									<thead>
+										<th>ID</th>
+										<th>Name</th>
+										{{-- <th>Measure Number(#)<br>[30 days count] </th> --}}
+										<th>SYS(mmHg)<br>[30 days Avg.]</th>
+										<th>DIA(mmHg)<br>[30 days Avg.]</th>
+										<th>HHA(bpm)<br>[30 days Avg.]</th>
+										<th>ecg(m/s)<br>[30 days Avg.]</th>
+										<th>ppg(#)<br>[30 days count]</th>
+										<th>Arterial Age<br>[up to date]</th>
+										<th>Arrhythmia(#)<br>[30 days count]</th>
+									</thead>
+									<tbody>
+										@foreach($users as $user)
+										<tr>
+											<td>{{ $user->shdct_user_id }}</td>
+											<td>
+												<a href="#" data-toggle="modal" data-target="#information-modal"><img src="{{ asset('images/admin.jpg') }}"> {{ ucfirst($user->name)  }}</a>
+											</td>
+											{{-- <td>64</td> --}}
+											<td>{{ $user->patientHraData->hra['systolic'] ?? '-'}}</td>
+											<td>{{ $user->patientHraData->hra['diastolic'] ?? '-'}}</td>
+											<td>78</td>
+											<td>4.8</td>
+											<td>33.4</td>
+											<td>-</td>
+											<td>2</td>
+										</tr>
+										@endforeach
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 col-xs-12 tenant-panel" id="device1">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title" style="font-size:18px;display: inline-block;">Patient Profile - Device 1</h3>
+						<span class="pull-right clickable">
+							<i class="fa fa-chevron-up"></i>
+						</span>
+					</div>
+					<div class="panel-body" style="padding: 0;">
+						<div id="collapse">
+							<div class="table-responsive">
+								<table id="adminsettings-table" class="table table-bordered table-hover">
+									<thead>
+										<th>Name</th>
+										<th>Steps</th>
+										<th>BPM</th>
+										<th>Oxygenation</th>
+										<th>Systolic/Diastolic</th>
+										<th>Healthy Heart Count</th>
+										<th>Good Blood Reference</th>
+										<th>ECG</th>
+										<th>PPG</th>
+									</thead>
+									<tbody>
+										<tr>
+											<td>
+												<a href="#" data-toggle="modal" data-target="#information-modal"><img src="/images/admin.jpg">Abhishek</a>
+											</td>
+											<td>64</td>
+											<td>122</td>
+											<td>80</td>
+											<td>78</td>
+											<td>4.8</td>
+											<td>33.4</td>
+											<td>-</td>
+											<td>2</td>
+										</tr>
+										<tr>
+											<td>
+												<a href="#" data-toggle="modal" data-target="#information-modal"><img src="/images/admin.jpg">Anita</a>
+											</td>
+											<td>0</td>
+											<td>--</td>
+											<td>--</td>
+											<td>--</td>
+											<td>--</td>
+											<td>61.4-</td>
+											<td>--</td>
+											<td>--</td>
+										</tr>
+										<tr>
+											<td>
+												<a href="#" data-toggle="modal" data-target="#information-modal"><img src="/images/admin.jpg">Gaurav</a>
+											</td>
+											<td>0</td>
+											<td>--</td>
+											<td>--</td>
+											<td>--</td>
+											<td>--</td>
+											<td>39.9--</td>
+											<td>--</td>
+											<td>--</td>
+										</tr>
+										<tr>
+											<td>
+												<a href="#" data-toggle="modal" data-target="#information-modal"><img src="/images/admin.jpg">Nishant</a>
+											</td>
+											<td>0</td>
+											<td>--</td>
+											<td>--</td>
+											<td>--</td>
+											<td>--</td>
+											<td>39.3-</td>
+											<td>--</td>
+											<td>--</td>
+										</tr>
+										<tr>
+											<td>
+												<a href="#" data-toggle="modal" data-target="#information-modal"><img src="/images/admin.jpg">Rajat Sharma</a>
+											</td>
+											<td>14</td>
+											<td>121-</td>
+											<td>74-</td>
+											<td>76</td>
+											<td>4.4-</td>
+											<td>39.2-</td>
+											<td>--</td>
+											<td>2-</td>
+										</tr>
+										<tr>
+											<td>
+												<a href="#" data-toggle="modal" data-target="#information-modal"><img src="/images/admin.jpg">Anita</a>
+											</td>
+											<td>75</td>
+											<td>75</td>
+											<td>75</td>
+											<td>75</td>
+											<td>64</td>
+											<td>64</td>
+											<td>64</td>
+											<td>64</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="information-modal" role="dialog">
+			<div class="modal-dialog" id="first-modal">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title"></h4>
+					</div>
+					<div class="modal-body">
+						<ul class="nav nav-pills list-navigation">
+							<li class="active">
+								<a data-toggle="tab" href="#profile" aria-expanded="true">Profile</a>
+							</li>
+							<li class="">
+								<a data-toggle="tab" href="#measure" aria-expanded="false">Measure History</a>
+							</li>
+							<li class="">
+								<a data-toggle="tab" href="#addition-info" aria-expanded="false">Additional Info</a>
+							</li>
+							<li class="">
+								<a data-toggle="tab" href="#bp" aria-expanded="false">BP</a>
+							</li>
+							<li class="">
+								<a data-toggle="tab" href="#ecg" aria-expanded="false">ECG & PPG</a>
+							</li>
+							<li class="">
+								<a data-toggle="tab" href="#arrhythmia" aria-expanded="false">Arrhythmia</a>
+							</li>
+							<li class="">
+								<a data-toggle="tab" href="#arterial" aria-expanded="false">Arterial Age</a>
+							</li>
+							<li class="">
+								<a data-toggle="tab" href="#steps" aria-expanded="false">Steps</a>
+							</li>
+							<li class="">
+								<a data-toggle="tab" href="#advice" aria-expanded="false">Advice</a>
+							</li>
+						</ul>
+						<div class="tab-content">
+							<div id="profile" class="tab-pane fade in active">
+								<h3>Profile</h3>
+								<div class="text-right">
+<<<<<<< HEAD
+{{--                          <button type="button" class="btn btn-default" style="margin-bottom: 10px;">
+							Report
+							<span class="glyphicon glyphicon-stats"></span>
+						</button> --}}
+						<span class="hra-percent">0.0%</span>
+					</div>
+					<div class="row">
+						<div class="col-md-2 logo-profile">
+							<a href="#" data-toggle="modal" data-target="#information-modal"><img src="/images/admin.jpg"></a>
+						</div>
+						<div class="col-md-10 table-responsive">
+							<table class="table-bordered profile" width="100%">
+								<tbody>
+									<tr>
+										<th colspan="5" class="title-head">Basic Info</th>
+										<th class="title-head"></th>
+									</tr>
+									<tr>
+										<th>Name</th>
+										<td id="name">Abhishek</td>
+										<th>Age</th>
+										<td id="age">21</td>
+										<th>Gender</th>
+										<td id="gender">M</td>
+									</tr>
+									<tr>
+										<th>Height</th>
+										<td id="height">185cm</td>
+										<th>Weight</th>
+										<td id="weight">81kg</td>
+										<th>BMI</th>
+										<td id="bmi">23.7</td>
+									</tr>
+									<tr>
+										<th >Email</th>
+										<td colspan="3" id="email">abhishek.k@indglobal.us</td>
+										<th>Phone</th>
+										<td id="phone"></td>
+									</tr>
+									<tr>
+										<th>Disease History</th>
+										<td colspan="5" id="diseaseHistory"></td>
+									</tr>
+									<tr>
+										<th>Current Medications</th>
+										<td colspan="5" id="currentMedications"></td>
+									</tr>
+									<tr>
+										<th colspan="6" class="title-head" label="emergency_contact">Emergency contact person</th>
+									</tr>
+									<tr>
+										<th>Name</th>
+										<td id="emergencyContact"></td>
+										<th>Relationship</th>
+										<td id="relationship"></td>
+										<th>Phone</th>
+										<td id="emergencyPhone"></td>
+									</tr>
+									<tr>
+										<th colspan="6" class="title-head">Additional Info</th>
+									</tr>
+									<tr>
+										<th >Registration date</th>
+										<td colspan="2" id="registration_date">
+
+										</td>
+										<th>Doctor advice due date</th>
+										<td colspan="2" id="doctorAdviceDueDate"></td>
+									</tr>
+									<tr>
+										<th>Note by doctor</th>
+										<td colspan="5" id="noteByDoctor"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div id="measure" class="tab-pane fade">
+					<h3>Measure History</h3>
+					<div id="datepicker"></div>
+				</div>
+				<div id="addition-info" class="tab-pane fade">
+					<h3>Addditional Information</h3>
+					<div class="row">
+{{--                        <div class="col-md-12 table-responsive">
+							<table class="table-bordered profile" width="100%">
+								<tbody>
+									<tr>
+										<th colspan="5" class="title-head">Basic Info</th>
+										<th class="title-head"></th>
+									</tr>
+									<tr>
+										<th>Aadhar No or National Id</th>
+										<td id="aadhar"></td>
+										<th>Blood Group</th>
+										<td id="blood-group">A+ve</td>
+										<th>Occupation</th>
+										<td id="occupation">Business</td>
+									</tr>
+									<tr>
+										<th>Travel Frequency(National)</th>
+										<td id="height">Yes</td>
+										<th>Travel Frequency(National)</th>
+										<td id="weight">Yes</td>
+										<th>Diet Type</th>
+										<td id="bmi"></td>
+									</tr>
+									<tr>
+										<th>Average quantity </th>
+										<td id="height">Yes</td>
+										<th>Travel Frequency(National)</th>
+										<td id="weight">Yes</td>
+										<th>Diet Type</th>
+										<td id="bmi"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div> --}}
+						<form action="">
+=======
+{{-- 				          <button type="button" class="btn btn-default" style="margin-bottom: 10px;">
+				          	Report
+				          	<span class="glyphicon glyphicon-stats"></span>
+				          </button> --}}
+				          <span class="hra-percent">0.0%</span>
+				      </div>
+				      <div class="row">
+				      	<div class="col-md-2 logo-profile">
+				      		<a href="#" data-toggle="modal" data-target="#information-modal"><img src="/images/admin.jpg"></a>
+				      	</div>
+				      	<div class="col-md-10 table-responsive">
+				      		<table class="table-bordered profile" width="100%">
+				      			<tbody>
+				      				<tr>
+				      					<th colspan="5" class="title-head">Basic Info</th>
+				      					<th class="title-head"></th>
+				      				</tr>
+				      				<tr>
+				      					<th>Name</th>
+				      					<td id="name"></td>
+				      					<th>Age</th>
+				      					<td id="age">21</td>
+				      					<th>Gender</th>
+				      					<td id="gender">M</td>
+				      				</tr>
+				      				<tr>
+				      					<th>Height</th>
+				      					<td id="height">185cm</td>
+				      					<th>Weight</th>
+				      					<td id="weight">81kg</td>
+				      					<th>BMI</th>
+				      					<td id="bmi">23.7</td>
+				      				</tr>
+				      				<tr>
+				      					<th >Email</th>
+				      					<td colspan="3" id="email">abhishek.k@gmail.com</td>
+				      					<th>Phone</th>
+				      					<td id="phone"></td>
+				      				</tr>
+				      				<tr>
+				      					<th>Disease History</th>
+				      					<td colspan="5" id="diseaseHistory"></td>
+				      				</tr>
+				      				<tr>
+				      					<th>Current Medications</th>
+				      					<td colspan="5" id="currentMedications"></td>
+				      				</tr>
+				      				<tr>
+				      					<th colspan="6" class="title-head" label="emergency_contact">Emergency contact person</th>
+				      				</tr>
+				      				<tr>
+				      					<th>Name</th>
+				      					<td id="emergencyContact"></td>
+				      					<th>Relationship</th>
+				      					<td id="relationship"></td>
+				      					<th>Phone</th>
+				      					<td id="emergencyPhone"></td>
+				      				</tr>
+				      				<tr>
+				      					<th colspan="6" class="title-head">Additional Info</th>
+				      				</tr>
+				      				<tr>
+				      					<th >Registration date</th>
+				      					<td colspan="2" id="registration_date">
+
+				      					</td>
+				      					<th>Doctor advice due date</th>
+				      					<td colspan="2" id="doctorAdviceDueDate"></td>
+				      				</tr>
+				      				<tr>
+				      					<th>Note by doctor</th>
+				      					<td colspan="5" id="noteByDoctor"></td>
+				      				</tr>
+				      			</tbody>
+				      		</table>
+				      	</div>
+				      </div>
+				  </div>
+				  <div id="measure" class="tab-pane fade">
+				  	<h3>Measure History</h3>
+				  	<div id="datepicker"></div>
+				  </div>
+				  <div id="addition-info" class="tab-pane fade">
+				  	<h3>Addditional Information</h3>
+				  	<div class="row">
+				  		<div class="col-md-2">
+				  			<div class="img-text-wrap">
+				  				<img src="/images/steps.svg" alt="steps" class="img-responsive">
+				  				<div class="text-content">
+				  					<p>5342</p>
+				  					<span>Steps</span>
+				  				</div>
+				  			</div>
+				  		</div>
+				  		<div class="col-md-2">
+				  			<div class="img-text-wrap">
+				  				<img src="/images/bpm.svg" alt="steps" class="img-responsive">
+				  				<div class="text-content">
+				  					<p>100</p>
+				  					<span>BPM</span>
+				  				</div>
+				  			</div>
+				  		</div>
+				  		<div class="col-md-2">
+				  			<div class="img-text-wrap">
+				  				<img src="/images/systolic.svg" alt="steps" class="img-responsive">
+				  				<div class="text-content">
+				  					<p>128/80</p>
+				  					<span>Systolic/Diastolic</span>
+				  				</div>
+				  			</div>
+				  		</div>
+				  		<div class="col-md-2">
+				  			<div class="img-text-wrap">
+				  				<img src="/images/heart_count.svg" alt="steps" class="img-responsive">
+				  				<div class="text-content">
+				  					<p>74%</p>
+				  					<span>Healthy Heart Count</span>
+				  				</div>
+				  			</div>
+				  		</div>
+				  		<div class="col-md-2">
+				  			<div class="img-text-wrap">
+				  				<img src="/images/blood_reference.svg" alt="steps" class="img-responsive">
+				  				<div class="text-content">
+				  					<p>81%</p>
+				  					<span>Good Blood Reference</span>
+				  				</div>
+				  			</div>
+				  		</div>
+				  		<div class="col-md-2">
+				  			<div class="img-text-wrap">
+				  				<img src="/images/oxygenation.svg" alt="steps" class="img-responsive">
+				  				<div class="text-content">
+				  					<p>98</p>
+				  					<span>Oxygenation</span>
+				  				</div>
+				  			</div>
+				  		</div>
+				  	</div>
+				  	<div class="text-right">
+				  		<span class="hra-percent">0.0%</span>
+				  	</div>
+				  	<div class="row">
+				  		<div class="table-responsive">
+				  			<table class="table-bordered profile" width="100%">
+				  				<tbody>
+				  					<tr>
+				  						<th colspan="6" class="title-head">Additional Info</th>
+				  					</tr>
+				  					<tr>
+				  						<th>Aadhar No or National Id</th>
+				  						<td id="aadhar">1122334444</td>
+				  						<th>Blood Group</th>
+				  						<td id="blood-group">A+ve</td>
+				  						<th>Occupation</th>
+				  						<td id="occupation">Business</td>
+				  					</tr>
+				  					<tr>
+				  						<th>Travel Frequency(National)</th>
+				  						<td id="national-travel">Yes</td>
+				  						<th>Travel Frequency(International)</th>
+				  						<td id="international-travel">Yes</td>
+				  						<th>Diet Type</th>
+				  						<td id="diet-type">Vegetarian</td>
+				  					</tr>
+				  					<tr>
+				  						<th>Average quantity of vegetables consumed everyday</th>
+				  						<td id="vegetables">7</td>
+				  						<th>Average quantity of fast food consumed everyday</th>
+				  						<td id="fast-food">2</td>
+				  						<th>How many cups of fruits you had in the last week?</th>
+				  						<td id="fruits">10</td>
+				  					</tr>
+				  					<tr>
+				  						<th>Average quantity of cereals everyday</th>
+				  						<td id="cereals">7</td>
+				  						<th>Drinks(juice,soda,cola) taken in the past week</th>
+				  						<td id="drinks">2</td>
+				  					</tr>
+				  					<tr>
+				  						<th>Do you take alcohol</th>
+				  						<td id="alcohol">Yes</td>
+				  						<th>Alochol Intake</th>
+				  						<td id="intake-alcohol">Monthly</td>
+				  						<th>Choose Quantity of Alochol Intake</th>
+				  						<td id="quantity-alcohol">Small</td>
+				  					</tr>
+				  					<tr>
+				  						<th>Smoking</th>
+				  						<td id="smoke">Yes</td>
+				  						<th>Smoking Intake</th>
+				  						<td id="smoking-intake">Daily</td>
+				  						<th>Choose number of cigarettes smoked</th>
+				  						<td id="smoking-times">5</td>
+				  					</tr>
+				  					<tr>
+				  						<th>Choose consumption of non-smoking tobacco</th>
+				  						<td id="non-ssmoking-tobaco">5</td>
+				  						<th>In the past week, how much time did you spend doing vigorous intensity physical activity?</th>
+				  						<td id="vigorous-activity">5</td>
+				  						<th>In the past week, how much time did you spend doing moderate intensity physical activity?</th>
+				  						<td id="moderate-activity">5</td>
+				  					</tr>
+				  					<tr>
+				  						<th>In the past week, how much time did you spend doing light intensity physical activity?</th>
+				  						<td id="light-activity">2</td>
+				  						<th>Are you Diabetic?</th>
+				  						<td id="diabtice">Yes</td>
+				  						<th>Are you Diabetic?</th>
+				  						<td id="diabtice-answer">Taking Medicine with Normal Sugar Levels</td>
+				  					</tr>
+				  					<tr>
+				  						<th>Taking Blood Cholesterol (checked within 6 months)</th>
+				  						<td id="blood-cholesterol">200-240</td>
+				  						<th>Enter Systolic Blood Pressure (if checked recently)</th>
+				  						<td id="sys-bp">120</td>
+				  						<th>Enter Diastolic Blood Pressure (if checked recently)</th>
+				  						<td id="ds-bp">80</td>
+				  					</tr>
+				  					<tr>
+				  						<th>Have you been diagnosed to have any heart related ailment?</th>
+				  						<td id="heart-aliment">Yes</td>
+				  						<th>Coronary artey disease/ ischemic heart disease</th>
+				  						<td id="artery">Yes</td>
+				  						<th>Have you ever suffered form Angina pain?</th>
+				  						<td id="angina-pain">Yes</td>
+				  					</tr>
+				  					<tr>
+				  						<th>Are you under regular medication for the same?</th>
+				  						<td id="medication">Yes</td>
+				  						<th>Have you suffered a heart attck?</th>
+				  						<td id="heart-attck">No</td>
+				  						<th>Do you have an abnormal ECG for which you are being treated?</th>
+				  						<td id="ECG">Yes</td>
+				  					</tr>
+				  					<tr>
+				  						<th>Have you undergonr coronary angiography?</th>
+				  						<td id="angiography">Yes</td>
+				  						<th>Have you suffered from stroke?</th>
+				  						<td id="stroke">Yes</td>
+				  						<th>Reason for stroke?</th>
+				  						<td id="stroke-reason">Bleed</td>
+				  					</tr>
+				  					<tr>
+				  						<th>Have you ever been diagnosed to have a TIA(Transient Ischemic Attck)</th>
+				  						<td id="tia">Yes</td>
+				  						<th>Are you under regular treatment for the same?</th>
+				  						<td id="tia-treatment">Yes</td>
+				  						<th>Any Pre-Existing Diseases?</th>
+				  						<td id="pre-diseases">No</td>
+				  					</tr>
+				  					<tr>
+				  						<th>Any Pre-Existing Diseases?</th>
+				  						<td id="pre-diseases-list">Heart Disease</td>
+				  						<th>Any Allergy?</th>
+				  						<td id="allergy">Yes</td>
+				  						<th>Any Allergy?</th>
+				  						<td id="allergy-list">Milk Allergy</td>
+				  					</tr>
+				  					<tr>
+				  						<th>Any Medication?</th>
+				  						<td id="normal-medication">Yes</td>
+				  						<th>Any Medication?</th>
+				  						<td id="normal-medication-list">Disprin</td>
+				  						<th>Enter Dosage?</th>
+				  						<td id="allergy-list">10</td>
+				  					</tr>
+
+				  				</tbody>
+				  			</table>
+				  		</div>
+{{-- 				  	<form action="">
+>>>>>>> 2e385bd5be864d90e4d1e9047b083aa4c22848f3
+							<div class="row">
+								<div class="col-md-4 col-xs-12 form-group">
+									<label for="email">Aadhar No or National Id</label>
+									<input type="email" class="form-control" id="aadhar">
+								</div>
+								<div class="col-md-4 col-xs-12 form-group">
+									<label for="inter-travel">Travel Frequency (International)</label>
+									<div class="row">
+										<div class="col-md-4 radio-container">
+											<input id="weekly" type="radio" class="radio" name="inter-travel" value="Weekly">
+											<label for="weekly">
+												Weekly
+											</label>
+										</div>
+										<div class="col-md-4 radio-container">
+											<input id="monthly" type="radio" class="radio" name="inter-travel" value="Monthly">
+											<label for="monthly">
+												Monthly
+											</label>
+										</div>
+										<div class="col-md-4 radio-container">
+											<input id="yearly" type="radio" class="radio" name="inter-travel" value="Yearly">
+											<label for="yearly">
+												Yearly
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4 col-xs-12 form-group">
+									<label for="nation-travel">Travel Frequency (National)</label>
+									<div class="row">
+										<div class="col-md-4 radio-container">
+											<input id="nation-weekly" type="radio" class="radio" name="nation-travel" value="Weekly">
+											<label for="nation-weekly">
+												Weekly
+											</label>
+										</div>
+										<div class="col-md-4 radio-container">
+											<input id="nation-monthly" type="radio" class="radio" name="nation-travel" value="Monthly">
+											<label for="nation-monthly">
+												Monthly
+											</label>
+										</div>
+										<div class="col-md-4 radio-container">
+											<input id="nation-yearly" type="radio" class="radio" name="nation-travel" value="Yearly">
+											<label for="nation-yearly">
+												Yearly
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 col-xs-12 form-group">
+									<label for="blood-group">Select Your Blood Group</label>
+									<div class="row">
+										<div class="col-md-3 radio-container">
+											<input id="apositive" type="radio" class="radio" name="blood-group" value="A+ve">
+											<label for="apositive">
+												A+ve
+											</label>
+										</div>
+										<div class="col-md-3 radio-container">
+											<input id="anegative" type="radio" class="radio" name="blood-group" value="A-ve">
+											<label for="anegative">
+												A-ve
+											</label>
+										</div>
+										<div class="col-md-3 radio-container">
+											<input id="bpositive" type="radio" class="radio" name="blood-group" value="B+ve">
+											<label for="bpositive">
+												B+ve
+											</label>
+										</div>
+										<div class="col-md-3 radio-container">
+											<input id="bnegative" type="radio" class="radio" name="blood-group" value="B-ve">
+											<label for="bnegative">
+												B-ve
+											</label>
+										</div>
+										<div class="col-md-3 radio-container">
+											<input id="abpositive" type="radio" class="radio" name="blood-group" value="AB+ve">
+											<label for="abpositive">
+												AB+ve
+											</label>
+										</div>
+										<div class="col-md-3 radio-container">
+											<input id="abpositive" type="radio" class="radio" name="blood-group" value="AB-ve">
+											<label for="abnegative">
+												AB-ve
+											</label>
+										</div>
+										<div class="col-md-3 radio-container">
+											<input id="opositive" type="radio" class="radio" name="blood-group" value="O+ve">
+											<label for="opositive">
+												O+ve
+											</label>
+										</div>
+										<div class="col-md-3 radio-container">
+											<input id="onegative" type="radio" class="radio" name="blood-group" value="O-ve">
+											<label for="onegative">
+												O-ve
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 col-xs-12 form-group">
+<<<<<<< HEAD
+									<label for="diet-type">Diet Type</label>
+									<div class="row">
+										<div class="col-md-3 radio-container">
+											<input id="vegetarian" type="radio" class="radio" name="diet-type" value="Vegetarian">
+											<label for="vegetarian">
+												Vegetarian
+											</label>
+										</div>
+										<div class="col-md-3 radio-container">
+											<input id="non-vegetarian" type="radio" class="radio" name="diet-type" value="Non-Vegetarian">
+											<label for="non-vegetarian">
+												Non-Vegetarian
+											</label>
+										</div>
+										<div class="col-md-3 radio-container">
+											<input id="vegan" type="radio" class="radio" name="diet-type" value="vegan">
+											<label for="vegan">
+												Vegan
+											</label>
+										</div>
+										<div class="col-md-3 radio-container">
+											<input id="eggitarian" type="radio" class="radio" name="diet-type" value="Eggitarian">
+											<label for="eggitarian">
+												Eggitarian
+											</label>
+										</div>
+										<div class="col-md-3 radio-container">
+											<input id="ketogenic" type="radio" class="radio" name="diet-type" value="Ketogenic">
+											<label for="ketogenic">
+												Ketogenic
+											</label>
+										</div>
+										<div class="col-md-3 radio-container">
+											<input id="paleo" type="radio" class="radio" name="diet-type" value="Paleo">
+											<label for="paleo">
+												Paleo
+											</label>
+										</div>
+										<div class="col-md-3 radio-container">
+											<input id="jain" type="radio" class="radio" name="diet-type" value="Jain">
+											<label for="jain">
+												Jain
+											</label>
+										</div>
+									</div>
+=======
+								 	    <label for="diet-type">Diet Type</label>
+									 	<div class="row">
+										 	<div class="col-md-3 radio-container">
+										 		<input id="vegetarian" type="radio" class="radio" name="diet-type" value="Vegetarian">
+										 		<label for="vegetarian">
+										 		    Vegetarian
+										 		</label>
+										 	</div>
+										 	<div class="col-md-3 radio-container">
+										 		<input id="non-vegetarian" type="radio" class="radio" name="diet-type" value="Non-Vegetarian">
+										 		<label for="non-vegetarian">
+										 	         Non-Vegetarian
+										 		</label>
+										 	</div>
+										 	<div class="col-md-3 radio-container">
+										 		<input id="vegan" type="radio" class="radio" name="diet-type" value="vegan">
+										 		<label for="vegan">
+										 	         Vegan
+										 		</label>
+										 	</div>
+										 	<div class="col-md-3 radio-container">
+										 		<input id="eggitarian" type="radio" class="radio" name="diet-type" value="Eggitarian">
+										 		<label for="eggitarian">
+										 	         Eggitarian
+										 		</label>
+										 	</div>
+										 	<div class="col-md-3 radio-container">
+										 		<input id="ketogenic" type="radio" class="radio" name="diet-type" value="Ketogenic">
+										 		<label for="ketogenic">
+										 	         Ketogenic
+										 		</label>
+										 	</div>
+										 	<div class="col-md-3 radio-container">
+										 		<input id="paleo" type="radio" class="radio" name="diet-type" value="Paleo">
+										 		<label for="paleo">
+										 	         Paleo
+										 		</label>
+										 	</div>
+										 	<div class="col-md-3 radio-container">
+										 		<input id="jain" type="radio" class="radio" name="diet-type" value="Jain">
+										 		<label for="jain">
+										 	         Jain
+										 		</label>
+										 	</div>
+									 	</div>
+								</div>
+						        <div class="col-md-6 col-xs-12 form-group">
+								 	    <label for="nation-travel">Occupation</label>
+									 	<div class="row">
+										 	<div class="col-md-4 radio-container">
+										 		<input id="government" type="radio" class="radio" name="occupation" value="Government">
+										 		<label for="government">
+										 		    Government
+										 		</label>
+										 	</div>
+										 	<div class="col-md-4 radio-container">
+										 		<input id="private-company" type="radio" class="radio" name="occupation" value="Private Company">
+										 		<label for="private-company">
+										 	         Private Company
+										 		</label>
+										 	</div>
+										 	<div class="col-md-4 radio-container">
+										 		<input id="self-employed" type="radio" class="radio" name="occupation" value="Self Employed">
+										 		<label for="self-employed">
+										 	         Self Employed
+										 		</label>
+										 	</div>
+										 	<div class="col-md-4 radio-container">
+										 		<input id="np-organization" type="radio" class="radio" name="occupation" value="np-organization">
+										 		<label for="Non-Profit Organization">
+										 	         Non-Profit Organization
+										 		</label>
+										 	</div>
+										 	<div class="col-md-4 radio-container">
+										 		<input id="other" type="radio" class="radio" name="occupation" value="Other">
+										 		<label for="other">
+										 	         Other
+										 		</label>
+										 	</div>
+								        </div>
+								</div>
+							    <div class="col-md-4 col-xs-12 form-group round-radio-wrapper">
+								 	    <label for="fruits">Average quantity of vegetables consumed everyday</label>
+									 	<div class="row">
+										 	<div class="col-md-2 radio-container">
+										 		<input id="veg-zero" type="radio" class="radio" name="fruits" value="zeo">
+										 		<label for="veg-zero">
+										 		    0
+										 		</label>
+										 	</div>
+										 	<div class="col-md-2 radio-container">
+										 		<input id="veg-two" type="radio" class="radio" name="fruits" value="2">
+										 		<label for="veg-two">
+										 	         2
+										 		</label>
+										 	</div>
+										 	<div class="col-md-2 radio-container">
+										 		<input id="veg-third" type="radio" class="radio" name="fruits" value="3">
+										 		<label for="veg-third">
+										 	         3
+										 		</label>
+										 	</div>
+										 	<div class="col-md-2 radio-container">
+										 		<input id="veg-four" type="radio" class="radio" name="fruits" value="4">
+										 		<label for="veg-four">
+										 	         4
+										 		</label>
+										 	</div>
+										 	<div class="col-md-2 radio-container">
+										 		<input id="veg-five" type="radio" class="radio" name="fruits" value="5">
+										 		<label for="veg-five">
+										 	         5
+										 		</label>
+										 	</div>
+								        </div>
+								</div>
+								<div class="col-md-4 col-xs-12 form-group round-radio-wrapper">
+								 	    <label for="fruits">How many cups of fruits you had in the last week?</label>
+									 	<div class="row">
+										 	<div class="col-md-2 radio-container">
+										 		<input id="fruit-zero" type="radio" class="radio" name="fruits" value="zeo">
+										 		<label for="fruit-zero">
+										 		    0
+										 		</label>
+										 	</div>
+										 	<div class="col-md-2 radio-container">
+										 		<input id="fruit-two" type="radio" class="radio" name="fruits" value="2">
+										 		<label for="fruit-two">
+										 	         2
+										 		</label>
+										 	</div>
+										 	<div class="col-md-2 radio-container">
+										 		<input id="fruit-third" type="radio" class="radio" name="fruits" value="3">
+										 		<label for="fruit-third">
+										 	         3
+										 		</label>
+										 	</div>
+										 	<div class="col-md-2 radio-container">
+										 		<input id="fruit-four" type="radio" class="radio" name="fruits" value="4">
+										 		<label for="fruit-four">
+										 	         4
+										 		</label>
+										 	</div>
+										 	<div class="col-md-2 radio-container">
+										 		<input id="fruit-five" type="radio" class="radio" name="fruits" value="5">
+										 		<label for="fruit-five">
+										 	         5
+										 		</label>
+										 	</div>
+								        </div>
+								</div>
+							    <div class="col-md-4 col-xs-12 form-group round-radio-wrapper">
+								 	    <label for="fruits">Average quantity of cereals everyday</label>
+									 	<div class="row">
+										 	<div class="col-md-2 radio-container">
+										 		<input id="cereals-zero" type="radio" class="radio" name="fruits" value="zeo">
+										 		<label for="cereals-zero">
+										 		    0
+										 		</label>
+										 	</div>
+										 	<div class="col-md-2 radio-container">
+										 		<input id="cereals-two" type="radio" class="radio" name="fruits" value="2">
+										 		<label for="cereals-two">
+										 	         2
+										 		</label>
+										 	</div>
+										 	<div class="col-md-2 radio-container">
+										 		<input id="cereals-third" type="radio" class="radio" name="fruits" value="3">
+										 		<label for="cereals-third">
+										 	         3
+										 		</label>
+										 	</div>
+										 	<div class="col-md-2 radio-container">
+										 		<input id="cereals-four" type="radio" class="radio" name="fruits" value="4">
+										 		<label for="cereals-four">
+										 	         4
+										 		</label>
+										 	</div>
+										 	<div class="col-md-2 radio-container">
+										 		<input id="cereals-five" type="radio" class="radio" name="fruits" value="5">
+										 		<label for="cereals-five">
+										 	         5
+										 		</label>
+										 	</div>
+								        </div>
+								</div>
+							    <div class="col-md-4 col-xs-12 form-group round-radio-wrapper">
+								 	    <label for="fruits">Average quantity of fast food consumed everyday</label>
+									 	<div class="row">
+										 	<div class="col-md-2 radio-container">
+										 		<input id="food-zero" type="radio" class="radio" name="fruits" value="zeo">
+										 		<label for="food-zero">
+										 		    0
+										 		</label>
+										 	</div>
+										 	<div class="col-md-2 radio-container">
+										 		<input id="food-two" type="radio" class="radio" name="fruits" value="2">
+										 		<label for="food-two">
+										 	         2
+										 		</label>
+										 	</div>
+										 	<div class="col-md-2 radio-container">
+										 		<input id="food-third" type="radio" class="radio" name="fruits" value="3">
+										 		<label for="food-third">
+										 	         3
+										 		</label>
+										 	</div>
+										 	<div class="col-md-2 radio-container">
+										 		<input id="food-four" type="radio" class="radio" name="fruits" value="4">
+										 		<label for="food-four">
+										 	         4
+										 		</label>
+										 	</div>
+										 	<div class="col-md-2 radio-container">
+										 		<input id="food-five" type="radio" class="radio" name="fruits" value="5">
+										 		<label for="food-five">
+										 	         5
+										 		</label>
+										 	</div>
+								        </div>
+>>>>>>> 2e385bd5be864d90e4d1e9047b083aa4c22848f3
+								</div>
+{{--                                <div class="col-md-6 col-xs-12 form-group">
+										<label for="nation-travel">Occupation</label>
+										<div class="row">
+											<div class="col-md-4 radio-container">
+												<input id="government" type="radio" class="radio" name="occupation" value="Government">
+												<label for="government">
+													Government
+												</label>
+											</div>
+											<div class="col-md-4 radio-container">
+												<input id="private-company" type="radio" class="radio" name="occupation" value="Private Company">
+												<label for="private-company">
+													 Private Company
+												</label>
+											</div>
+											<div class="col-md-4 radio-container">
+												<input id="self-employed" type="radio" class="radio" name="occupation" value="Self Employed">
+												<label for="self-employed">
+													 Self Employed
+												</label>
+											</div>
+											<div class="col-md-4 radio-container">
+												<input id="np-organization" type="radio" class="radio" name="occupation" value="np-organization">
+												<label for="Non-Profit Organization">
+													 Non-Profit Organization
+												</label>
+											</div>
+											<div class="col-md-4 radio-container">
+												<input id="other" type="radio" class="radio" name="occupation" value="Other">
+												<label for="other">
+													 Other
+												</label>
+											</div>
+										</div>
+									</div> --}}
+									<div class="col-md-4 col-xs-12 form-group round-radio-wrapper">
+										<label for="fruits">Average quantity of vegetables consumed everyday</label>
+										<div class="row">
+											<div class="col-md-2 radio-container">
+												<input id="veg-zero" type="radio" class="radio" name="fruits" value="zeo">
+												<label for="veg-zero">
+													0
+												</label>
+											</div>
+											<div class="col-md-2 radio-container">
+												<input id="veg-two" type="radio" class="radio" name="fruits" value="2">
+												<label for="veg-two">
+													2
+												</label>
+											</div>
+											<div class="col-md-2 radio-container">
+												<input id="veg-third" type="radio" class="radio" name="fruits" value="3">
+												<label for="veg-third">
+													3
+												</label>
+											</div>
+											<div class="col-md-2 radio-container">
+												<input id="veg-four" type="radio" class="radio" name="fruits" value="4">
+												<label for="veg-four">
+													4
+												</label>
+											</div>
+											<div class="col-md-2 radio-container">
+												<input id="veg-five" type="radio" class="radio" name="fruits" value="5">
+												<label for="veg-five">
+													5
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4 col-xs-12 form-group round-radio-wrapper">
+										<label for="fruits">How many cups of fruits you had in the last week?</label>
+										<div class="row">
+											<div class="col-md-2 radio-container">
+												<input id="fruit-zero" type="radio" class="radio" name="fruits" value="zeo">
+												<label for="fruit-zero">
+													0
+												</label>
+											</div>
+											<div class="col-md-2 radio-container">
+												<input id="fruit-two" type="radio" class="radio" name="fruits" value="2">
+												<label for="fruit-two">
+													2
+												</label>
+											</div>
+											<div class="col-md-2 radio-container">
+												<input id="fruit-third" type="radio" class="radio" name="fruits" value="3">
+												<label for="fruit-third">
+													3
+												</label>
+											</div>
+											<div class="col-md-2 radio-container">
+												<input id="fruit-four" type="radio" class="radio" name="fruits" value="4">
+												<label for="fruit-four">
+													4
+												</label>
+											</div>
+											<div class="col-md-2 radio-container">
+												<input id="fruit-five" type="radio" class="radio" name="fruits" value="5">
+												<label for="fruit-five">
+													5
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4 col-xs-12 form-group round-radio-wrapper">
+										<label for="fruits">Average quantity of vegetables cereals everyday</label>
+										<div class="row">
+											<div class="col-md-2 radio-container">
+												<input id="cereals-zero" type="radio" class="radio" name="fruits" value="zeo">
+												<label for="cereals-zero">
+													0
+												</label>
+											</div>
+											<div class="col-md-2 radio-container">
+												<input id="cereals-two" type="radio" class="radio" name="fruits" value="2">
+												<label for="cereals-two">
+													2
+												</label>
+											</div>
+											<div class="col-md-2 radio-container">
+												<input id="cereals-third" type="radio" class="radio" name="fruits" value="3">
+												<label for="cereals-third">
+													3
+												</label>
+											</div>
+											<div class="col-md-2 radio-container">
+												<input id="cereals-four" type="radio" class="radio" name="fruits" value="4">
+												<label for="cereals-four">
+													4
+												</label>
+											</div>
+											<div class="col-md-2 radio-container">
+												<input id="cereals-five" type="radio" class="radio" name="fruits" value="5">
+												<label for="cereals-five">
+													5
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4 col-xs-12 form-group round-radio-wrapper">
+										<label for="fruits">Average quantity of fast food consumed everyday</label>
+										<div class="row">
+											<div class="col-md-2 radio-container">
+												<input id="food-zero" type="radio" class="radio" name="fruits" value="zeo">
+												<label for="food-zero">
+													0
+												</label>
+											</div>
+											<div class="col-md-2 radio-container">
+												<input id="food-two" type="radio" class="radio" name="fruits" value="2">
+												<label for="food-two">
+													2
+												</label>
+											</div>
+											<div class="col-md-2 radio-container">
+												<input id="food-third" type="radio" class="radio" name="fruits" value="3">
+												<label for="food-third">
+													3
+												</label>
+											</div>
+											<div class="col-md-2 radio-container">
+												<input id="food-four" type="radio" class="radio" name="fruits" value="4">
+												<label for="food-four">
+													4
+												</label>
+											</div>
+											<div class="col-md-2 radio-container">
+												<input id="food-five" type="radio" class="radio" name="fruits" value="5">
+												<label for="food-five">
+													5
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4 col-xs-12 form-group round-radio-wrapper">
+										<label for="fruits">Drinks(juice,soda,cola) taken in the past week</label>
+										<div class="row">
+											<div class="col-md-2 radio-container">
+												<input id="drinks-zero" type="radio" class="radio" name="fruits" value="zeo">
+												<label for="drinks-zero">
+													0
+												</label>
+											</div>
+											<div class="col-md-2 radio-container">
+												<input id="drinks-two" type="radio" class="radio" name="fruits" value="2">
+												<label for="drinks-two">
+													2
+												</label>
+											</div>
+											<div class="col-md-2 radio-container">
+												<input id="drinks-third" type="radio" class="radio" name="fruits" value="3">
+												<label for="drinks-third">
+													3
+												</label>
+											</div>
+											<div class="col-md-2 radio-container">
+												<input id="drinks-four" type="radio" class="radio" name="fruits" value="4">
+												<label for="drinks-four">
+													4
+												</label>
+											</div>
+											<div class="col-md-2 radio-container">
+												<input id="drinks-five" type="radio" class="radio" name="fruits" value="5">
+												<label for="drinks-five">
+													5
+												</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div id="bp" class="tab-pane fade">
+						<h3>BP</h3>
+						<canvas id="bp-chart" width="800" height="450"></canvas>
+						<h3>HR</h3>
+						<canvas id="hr-chart" width="800" height="450"></canvas>
+					</div>
+					<div id="afib" class="tab-pane fade">
+						<h3>AFib</h3>
+						<canvas id="afib-chart" width="800" height="450"></canvas>
+					</div>
+					<div id="arrhythmia" class="tab-pane fade">
+						<h3>Arrhythmia</h3>
+						<canvas id="arrhythmia-chart" width="800" height="300"></canvas>
+					</div>
+					<div id="arterial" class="tab-pane fade">
+						<h3>Arterial Age</h3>
+						<canvas id="arterial-chart" width="800" height="300"></canvas>
+					</div>
+					<div id="rPWV" class="tab-pane fade">
+						<h3>rPWV</h3>
+						<canvas id="line-chart" width="800" height="300"></canvas>
+					</div>
+					<div id="advice" class="tab-pane fade">
+						<h3>Advice History</h3>
+						<div class="row">
+							<div class="col-md-2 logo-profile">
+								<a href="#" data-toggle="modal" data-target="#information-modal"><img src="/images/admin.jpg"></a>
+							</div>
+							<div class="col-md-10 table-responsive">
+								<table class="table-bordered profile" width="100%">
+									<tbody>
+										<tr>
+											<th colspan="6" class="title-head">Basic Info</th>
+										</tr>
+										<tr>
+											<th colspan="6">
+												<form id="advice-form" action="">
+													<div class="row">
+														<div class="form-group col-lg-5 col-md-12">
+															<label for="template-name">Template Name</label>
+															<div class="input-group">
+																<input type="text" autocomplete="off" id="select-box" class="form-control">
+																<span class="input-group-addon dropdown-toggle" data-dropdown="dropdown">
+																	<span class="caret"></span>
+																</span>
+															</div>
+															<button type="button" class="btn btn-sm btn-dark disabled"
+															id="save-btn">Save</button>
+															<button type="button" class="btn btn-sm btn-dark disabled" id="saveas-btn">Save As</button>
+														</div>
+														<div class="col-lg-7 col-md-12 beside-content">
+															<ol>
+																<li>If you want to add a new template, please fill in the content and press [SaveAs] button to create it.</li>
+																<li>If you want to modify a template, please choose an existing template and modify the content, then press [Save] button to update it.</li>
+															</ol>
+														</div>
+													</div>
+													<div class="row textarea-wrapper">
+														<textarea id="advice-content" cols="80" rows="15" class="form-control" style="resize:none;"></textarea>
+														<button type="button" class="btn btn-default btn-md" id="create-device">Create New Advice</button>
+													</div>
+												</form>
+											</th>
+										</tr>
+									</tbody>
+								</table>
+								<table class="table-bordered profile" width="100%" id="advice-history">
+									<tr>
+										<th colspan="6" class="title-head">No Advice History</th>
+									</tr>
+								</table>
+							</div>
+<<<<<<< HEAD
+						</div>
+					</div>
+=======
+						</form> --}}
+					</div>
+				</div>
+				<div id="bp" class="tab-pane fade">
+					<h3>BP</h3>
+					<canvas id="bp-chart" width="800" height="450"></canvas>
+				</div>
+				<div id="ecg" class="tab-pane fade">
+					<h3>ECG</h3>
+					<canvas id="ecg-chart" width="800" height="450"></canvas>
+					<h3>PPG</h3>
+					<canvas id="ppg-chart" width="800" height="450"></canvas>
+					<a class="view-history" data-toggle="modal" data-target="#history-modal" href="#history-modal">View history</a>
+				</div>
+				<div id="arrhythmia" class="tab-pane fade">
+					<h3>Arrhythmia</h3>
+					<canvas id="arrhythmia-chart" width="800" height="300"></canvas>
+>>>>>>> 2e385bd5be864d90e4d1e9047b083aa4c22848f3
+				</div>
+				<div id="arterial" class="tab-pane fade">
+					<h3>Arterial Age</h3>
+					<canvas id="arterial-chart" width="800" height="300"></canvas>
+				</div>
+				<div id="steps" class="tab-pane fade">
+					<h3>Steps</h3>
+					<canvas id="line-chart" width="800" height="300"></canvas>
+				</div>
+				<div id="advice" class="tab-pane fade">
+					<h3>Advice History</h3>
+					<div class="row">
+						<div class="col-md-2 logo-profile">
+							<a href="#" data-toggle="modal" data-target="#information-modal"><img src="/images/admin.jpg"></a>
+						</div>
+						<div class="col-md-10 table-responsive">
+							<table class="table-bordered profile" width="100%">
+								<tbody>
+									<tr>
+										<th colspan="6" class="title-head">Basic Info</th>
+									</tr>
+									<tr>
+										<th colspan="6">
+											<form id="advice-form" action="">
+												<div class="row">
+													<div class="form-group col-lg-5 col-md-12">
+														<label for="template-name">Template Name</label>
+														<div class="input-group">
+															<input type="text" autocomplete="off" id="select-box" class="form-control">
+															<span class="input-group-addon dropdown-toggle" data-dropdown="dropdown">
+																<span class="caret"></span>
+															</span>
+														</div>
+														<button type="button" class="btn btn-sm btn-dark disabled"
+														id="save-btn">Save</button>
+														<button type="button" class="btn btn-sm btn-dark disabled" id="saveas-btn">Save As</button>
+													</div>
+													<div class="col-lg-7 col-md-12 beside-content">
+														<ol>
+															<li>If you want to add a new template, please fill in the content and press [SaveAs] button to create it.</li>
+															<li>If you want to modify a template, please choose an existing template and modify the content, then press [Save] button to update it.</li>
+														</ol>
+													</div>
+												</div>
+												<div class="row textarea-wrapper">
+													<textarea id="advice-content" cols="80" rows="15" class="form-control" style="resize:none;"></textarea>
+													<button type="button" class="btn btn-default btn-md" id="create-device">Create New Advice</button>
+												</div>
+											</form>
+										</th>
+									</tr>
+								</tbody>
+							</table>
+							<table class="table-bordered profile" width="100%" id="advice-history">
+								<tr>
+									<th colspan="6" class="title-head">No Advice History</th>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+</div>
+<div class="background-wrap"></div>
+<div id="history-modal">
+	<div id="second-modal">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="history-close">&times;</button>
+				<h4 class="modal-title"></h4>
+			</div>
+			<div class="modal-body">
+				<p>Some text in the modal.</p>
+			</div>
+		</div>
+
+	</div>
+</div>
+</div>
+@endsection
+
+@section('script')
+@endsection

@@ -1,0 +1,31 @@
+#RewriteEngine On
+#RewriteCond %{HTTPS} !=on
+#RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
+#RewriteCond %{REQUEST_URI} !^/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+#RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+#RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+#AuthType Basic
+#AuthName "My Protected Area"
+#AuthUserFile /home/hedoctr/public_html/beta/.htpasswd
+#Require valid-user
+Header set Access-Control-Allow-Origin "*"
+
+<IfModule mod_rewrite.c>
+
+# Redirect to HTTPS https://admin.myaibud.com/admin/login
+#RewriteEngine On
+#RewriteCond %{HTTPS} off
+#RewriteCond %{REQUEST_URI} !^/\.admin\.myaibud\.com/admin/login$
+#RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+   
+</IfModule>
+
+<IfModule mod_php5.c>
+php_value memory_limit 64M
+</IfModule>
+
+<Files 403.shtml>
+order allow,deny
+allow from all
+</Files>

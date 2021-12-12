@@ -1,0 +1,1 @@
+@extends('tenant.component._master')
